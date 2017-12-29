@@ -4,7 +4,8 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
-var passport = require('passport');
+var passport = require('passport');//before db model
+
 var flash = require('connect-flash');
 var path = require('path');
 
@@ -28,8 +29,8 @@ if (process.env.NODE_ENV === 'production') {
 mongoose.connect(dbURI);
 
 console.log("App server successfully connected to", databaseType, "Database server!");
-
-
+require('./config/passport');//configuration after db model
+var routes = require('./routes/index');
 
 
 //set up our express application-------------------
