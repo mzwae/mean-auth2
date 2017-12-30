@@ -5,7 +5,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');//before db model
-
+require('./models/user');
 var flash = require('connect-flash');
 var path = require('path');
 
@@ -19,7 +19,7 @@ var session = require('express-session');
 
 //configuration------------------
 
-var dbURI = 'mongodb://localhost/mean-auth';
+var dbURI = 'mongodb://localhost/mean-auth2';
 var databaseType = "LOCAL";
 if (process.env.NODE_ENV === 'production') {
   databaseType = "REMOTE";
@@ -43,25 +43,36 @@ app.use(express.static(path.join(__dirname, 'client')));
 //app.set('views', path.join(__dirname, 'client', 'index.html'));
 
 //required for passport---------------------------
-app.use(session({
+/*app.use(session({
   secret: 'ilovescotchscotchyscotchscotch', // session secret
   resave: true,
   saveUninitialized: true
-}));
+}));*/
 app.use(passport.initialize());
-app.use(passport.session());//persist login sessions
+//app.use(passport.session());//persist login sessions
 app.use(flash());//use connet-flash for flash messages stored in session
 //require('./config/passport')(passport);//pass passport for configuration
 //require('./app/routes.js')(app, passport);//load our routes and pass in our app and fully configured passport
 
+app.use('/api', routes);
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, './client', 'index.html'));
+});
 
+// Auth middleware error handler
+app.use(function (err, req, res, next) {
+if (err.name === 'UnauthorizedError') {
+res.status(401);
+res.json({"message" : err.name + ": " + err.message});
+}
+});
 
 //launch-----------------------
-//app.listen(port, function(){
-//  console.log('node-auth server listening on port ', port);
-//});
+app.listen(port, function(){
+  console.log('node-auth server listening on port ', port);
+});
 
-module.exports = app;
+
 
 
 

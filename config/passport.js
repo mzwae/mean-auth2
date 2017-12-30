@@ -7,10 +7,11 @@ var User = mongoose.model('User');
 passport.use(new LocalStrategy({
     usernameField: 'email'
   },
-  function (username, password, done) {
-    //search MongoDB for user with supplied email address
+  function (email, password, done) {
+    //search MongoDB for user with supplied email address..
+ 
     User.findOne({
-      email: username
+      'local.email': email
     }, function (err, user) {
       if (err) {
         return done(err);
@@ -18,7 +19,7 @@ passport.use(new LocalStrategy({
       //if no user is found, return false and a message
       if (!user) {
         return done(null, false, {
-          message: 'Incorrect username.'
+          message: 'Incorrect email.'
         });
       }
 

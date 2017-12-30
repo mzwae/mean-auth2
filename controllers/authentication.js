@@ -10,6 +10,9 @@ var sendJSONresponse = function(res, status, content) {
 module.exports.register = function(req, res) {
   //respond with error status if not all required fields are provided
   if (!req.body.name || !req.body.email || !req.body.password) {
+    console.log('req.body.name', req.body.name);
+    console.log('req.body.email', req.body.email);
+    console.log('req.body.password', req.body.password);
     sendJSONresponse(res, 400, {
       "message": "All fields required"
     });
@@ -18,11 +21,11 @@ module.exports.register = function(req, res) {
 
   //create a new user instance and set name and email
   var user = new User();
-  user.name = req.body.name;
-  user.email = req.body.email;
+  user.local.name = req.body.name;
+  user.local.email = req.body.email;
 
   //Use setPassword method to set salt and hash
-  user.setPassword(req.body.password);
+  user.local.password = user.setPassword(req.body.password);
 
   //Save the new user to the database
   user.save(function(err) {
@@ -31,6 +34,7 @@ module.exports.register = function(req, res) {
       sendJSONresponse(res, 404, err);
     } else {
       //generate a JWT using schema method and send it to browser
+      console.log('New user saved in database!', user.local);
       token = user.generateJwt();
       sendJSONresponse(res, 200, {
         "token": token

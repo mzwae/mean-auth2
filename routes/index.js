@@ -5,11 +5,11 @@ var auth = jwt({
   secret: process.env.JWT_SECRET,
   userProperty: 'payload' //define property on req to be payload
 });
-var ctrlLocations = require('../controllers/locations');
-var ctrlReviews = require('../controllers/reviews');
+//var ctrlLocations = require('../controllers/locations');
+//var ctrlReviews = require('../controllers/reviews');
 var ctrlAuth = require('../controllers/authentication');
 
-//locations
+/*//locations
 router.get('/locations', ctrlLocations.locationListByDistance);
 
 router.post('/locations', ctrlLocations.locationsCreate);
@@ -28,7 +28,7 @@ router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOn
 
 router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsUpdateOne);
 
-router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);
+router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);*/
 
 
 //Authentication
