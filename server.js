@@ -16,7 +16,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 
-
+app.use(morgan('dev'));//log every request to the console
 //configuration------------------
 
 var dbURI = 'mongodb://localhost/mean-auth2';
@@ -34,7 +34,7 @@ var routes = require('./routes/index');
 
 
 //set up our express application-------------------
-app.use(morgan('dev'));//log every request to the console
+
 app.use(cookieParser());//read cookies - needed for auth
 app.use(bodyParser.json());//get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
@@ -68,6 +68,8 @@ res.json({"message" : err.name + ": " + err.message});
 });
 
 //launch-----------------------
+app.disable("x-powered-by");
+
 app.listen(port, function(){
   console.log('node-auth server listening on port ', port);
 });

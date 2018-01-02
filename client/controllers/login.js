@@ -1,26 +1,33 @@
 angular
   .module('meanAuth')
-  .controller('login', function ($scope, $http, $window, $location) {
+  .controller('loginCtrl', loginCtrl);
 
-
-
-      $scope.userlogin = function () {
-        $http({
-          method: "post",
-          url: '/login',
-          data: {
-            email: $scope.local.email,
-            password: $scope.local.password
-          },
-        }).success(function (response) {
-          $scope.userData = response;
-          $window.localStorage.userData = $scope.userData;
-          console.log("success!!");
-          console.log('response: ', response);
-          $location.path("/profile")
-        }).error(function (response) {
-          console.log("error!!");
-          $location.path("/login")
-        });
-      }
-});
+function loginCtrl($scope, $location, authentication){
+  $scope.credentials = {
+    email: "",
+    password: ""
+  };
+  
+  $scope.onSubmit = function(){
+    $scope.message = "";
+    
+    if(!$scope.credentials.email || !$scope.credentials.password){
+      $scope.message = "All fields required, please try again!";
+      return false;
+    } else {
+      $scope.doLogin();
+    }
+  };
+  
+  $scope.doLogin = function(){
+    $scope.message = "";
+    authentication
+      .login($scope.credentials)
+      .error(function(err){
+      $scope.message = err;
+    })
+      .then(function(){
+      $location.path('/profile');
+    });
+  }
+}

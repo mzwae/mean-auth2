@@ -8,18 +8,16 @@
         templateUrl: '/views/home.html'
       })
       .when('/signup', {
-        templateUrl: '/views/signup.html'
+        templateUrl: '/views/signup.html',
+        controller: 'signupCtrl'
       })
       .when('/login', {
         templateUrl: '/views/login.html',
-        controller: 'login'
-      }) 
-      .when('/connect/local', {
-        templateUrl: '/views/connect-local.html',
         controller: 'loginCtrl'
       }) 
       .when('/profile', {
-        templateUrl: '/views/profile.html'
+        templateUrl: '/views/profile.html',
+        controller: 'profileCtrl'
       })
      
       .otherwise({

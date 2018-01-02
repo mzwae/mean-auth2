@@ -10,9 +10,6 @@ var sendJSONresponse = function(res, status, content) {
 module.exports.register = function(req, res) {
   //respond with error status if not all required fields are provided
   if (!req.body.name || !req.body.email || !req.body.password) {
-    console.log('req.body.name', req.body.name);
-    console.log('req.body.email', req.body.email);
-    console.log('req.body.password', req.body.password);
     sendJSONresponse(res, 400, {
       "message": "All fields required"
     });
