@@ -31,7 +31,7 @@ router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviews
 router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);*/
 
 
-router.post('/profile', ctrlProfile.display);
+router.post('/userdata', auth, ctrlProfile.getUserData);
 
 //Authentication
 router.post('/register', ctrlAuth.register);

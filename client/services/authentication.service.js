@@ -32,7 +32,7 @@ function authentication($window, $http) {
   };
 
   var isLoggedIn = function () {
-    var token = getToken;
+    var token = getToken();
 
     //if token exists, get payload, decode it, and parse it to JSON
     if (token) {
@@ -50,7 +50,8 @@ function authentication($window, $http) {
       var payload = JSON.parse($window.atob(token.split('.')[1]));
       return {
         email: payload.email,
-        name: payload.name
+        name: payload.name,
+        id: payload._id
       }
     }
   };

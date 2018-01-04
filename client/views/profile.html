@@ -4,7 +4,13 @@
 </div>
 
 <div class="row">
-
+ <!-- show any messages that come back with authentication -->
+      <div ng-if="message.length > 0">
+        <div class="alert alert-danger">
+           {{message}}
+        </div>
+      </div>
+  
   <!-- LOCAL INFORMATION -->
   <div class="col-sm-6">
     <div class="well">
@@ -15,9 +21,9 @@
         <p>
           <strong>id</strong>: {{ user._id }}
           <br>
-          <strong>email</strong>: {{user.local.email}}
+          <strong>name</strong>: {{ user.local.name }}
           <br>
-          <strong>hashed password</strong>: {{ user.local.password }}
+          <strong>email</strong>: {{user.local.email}}
         </p>
 
         <a href="/unlink/local" class="btn btn-default">Unlink</a>
@@ -91,7 +97,7 @@
       <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google+</h3>
 
       <div ng-if="user.google.token">
-        <img src="<%= user.google.picture %>" class="img-circle center-block" />
+        <img ng-src="user.google.picture" class="img-circle center-block" />
         <hr>
         <p>
           <strong>id</strong>: {{user.google.id}}
