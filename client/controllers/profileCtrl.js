@@ -2,20 +2,30 @@ angular
   .module('meanAuth')
   .controller('profileCtrl', profileCtrl);
 
-function profileCtrl($scope, dbquery) {
+function profileCtrl($scope, dbquery, authentication, $location) {
 
-$scope.message = "";
-  dbquery
-    .getUserData()
-    .success(function (data) {
-      $scope.user = data;
-     
-    })
-    .error(function (err) {
-      $scope.message = err;
-    });
+  if (!authentication.isLoggedIn()) {
+    $location.path('/');
+  }
 
+  $scope.message = "";
 
+  if (authentication.isLoggedIn()) {
+    dbquery
+      .getUserData()
+      .success(function (data) {
+        $scope.user = data;
+
+      })
+      .error(function (err) {
+        $scope.message = err;
+      });
+  }
+  
+  $scope.logout = function () {
+    authentication.logout();
+    $location.path('/');
+  };
 
 
 }

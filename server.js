@@ -1,7 +1,9 @@
 //set up -------------------
+var morgan = require('morgan');
 require('dotenv').load();
 var express = require('express');
 var app = express();
+app.use(morgan('dev'));//log every request to the console
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');//before db model
@@ -10,13 +12,13 @@ var flash = require('connect-flash');
 var path = require('path');
 
 
-var morgan = require('morgan');
+
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
 
-app.use(morgan('dev'));//log every request to the console
+
 //configuration------------------
 
 var dbURI = 'mongodb://localhost/mean-auth2';
