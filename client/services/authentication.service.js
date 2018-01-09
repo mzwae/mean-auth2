@@ -13,7 +13,7 @@ function authentication($window, $http) {
 
   var register = function (user) {
     return $http
-      .post('/api/register', user)
+      .post('/register', user)
       .success(function (data) {
         saveToken(data.token);
       });
@@ -21,7 +21,7 @@ function authentication($window, $http) {
 
   var login = function (user) {
     return $http
-      .post('/api/login', user)
+      .post('/login', user)
       .success(function (data) {
         saveToken(data.token);
       });

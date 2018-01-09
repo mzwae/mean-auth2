@@ -2,6 +2,7 @@ var passport = require('passport');
 var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
+var path = require('path');
 var auth = jwt({
   secret: process.env.JWT_SECRET,
   userProperty: 'payload' //define property on req to be payload
@@ -31,7 +32,9 @@ router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviews
 
 router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne);*/
 
-
+router.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client', 'index.html'));
+});
 router.post('/userdata', auth, ctrlProfile.getUserData);
 
 //Authentication
@@ -53,17 +56,23 @@ router.get('/auth/facebook', passport.authenticate('facebook', {
 
 //handle the callback after facebook has authenticated the user
 /*router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect: '#/profile',
+  successRedirect: '/profile',
   failureRedirect: '/'
 }));*/
 
-router.get('/auth/facebook/callback', function(req, res){
-  res.send("url has been transfered to callback url");
-});
+router.get('/auth/facebook/callback', passport.authenticate('facebook', function(req, res){
+ console.log('req is: ', req);
+ console.log('res is: ', res);
+  
+}));
+
 
 /****TWITTER ROUTES****/
 //route for twitter authentication and login
 router.get('/auth/twitter', passport.authenticate('twitter'));
+/*router.get('/auth/twitter', function(req, res){
+  res.send("Twitter authentication request received");
+});*/
 
 //handle the callback after twitter has authenticated the user
 /*router.get('/auth/twitter/callback', passport.authenticate('twitter', {
@@ -71,9 +80,15 @@ router.get('/auth/twitter', passport.authenticate('twitter'));
   failureRedirect: '/'
 }));*/
 
-router.get('/auth/twitter/callback', function(req, res){
+
+router.get('/auth/twitter/callback', passport.authenticate('twitter', function(req, res){
+ console.log('req.body is: ', req.body);
+ console.log('res.body is: ', res.body);
+  
+}));
+/*router.get('/auth/twitter/callback', function(req, res){
   res.send("url has been transfered to callback url");
-});
+});*/
 
 /****GOOGLE ROUTES****/
 //send to google to do authentication

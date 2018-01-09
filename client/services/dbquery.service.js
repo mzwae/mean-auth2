@@ -7,7 +7,7 @@ function dbquery($http, authentication) {
     var token = authentication.getToken();
     var user = authentication.getUser();
     return $http
-      .post('/api/userdata', user, {
+      .post('/userdata', user, {
         headers: {
           Authorization: 'Bearer ' + token
         }

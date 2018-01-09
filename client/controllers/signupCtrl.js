@@ -10,7 +10,6 @@ function signupCtrl($scope, $location, authentication){
   };
   
   $scope.onSubmit = function(){
-    console.log('onSubmit clicked!');
     $scope.message = "";
     if(!$scope.credentials.name || !$scope.credentials.email || !$scope.credentials.password){
       $scope.message = "All fields require, Please try again!";

@@ -38,6 +38,21 @@ passport.use(new LocalStrategy({
 
 
 /***********Social accounts authentication********************************/
+
+  passport.serializeUser(function (user, done) {
+
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+
+      done(err, user);
+    });
+  });
+
+
+
 //load all the things we need
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;

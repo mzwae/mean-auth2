@@ -15,6 +15,7 @@ function profileCtrl($scope, dbquery, authentication, $location) {
       .getUserData()
       .success(function (data) {
         $scope.user = data;
+      console.log($scope.user);
 
       })
       .error(function (err) {
